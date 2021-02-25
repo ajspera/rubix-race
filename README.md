@@ -9,7 +9,7 @@
   - show solved button
 
 - click tile
-  - filter empty space is adjacent
+  - filter empty space is in row or column
     - find tiles between clicked and empty - move tiles one step towards empty
 
 - click solved button
