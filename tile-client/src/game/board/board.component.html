@@ -1,0 +1,12 @@
+<div class="app-board">
+  <div class="row" *ngFor="let row of tileMatrix" [style.height]="(100 / tileRows) + '%'">
+    <div
+      class="tile"
+      *ngFor="let tile of row"
+      [style.width]="(100 / tileCols) + '%'"
+      [style.background]="tile.color"
+    >
+      {{ tile.row }}, {{ tile.col }}, {{tile.color}}
+    </div>
+  </div>
+</div>
