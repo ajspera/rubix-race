@@ -41,7 +41,7 @@ export class BoardComponent implements OnInit {
     let moveAxis: 'col' | 'row';
     let matchAxis: 'col' | 'row';
 
-    // determine move axis or return
+    // determine move and match axis'
     if (tile.col === this.blankTile?.col) {
       moveAxis = 'row';
       matchAxis = 'col';
@@ -49,27 +49,27 @@ export class BoardComponent implements OnInit {
       moveAxis = 'col';
       matchAxis = 'row';
     } else {
-      return;
+      return; // bail if selected tile can't move on blank tile's axis
     }
 
-    const moveDistance = this.blankTile[moveAxis] - tile[moveAxis];
-    const moveDir = moveDistance > 0 ? 1 : -1;
+    const moveDirection: -1 | 1 = this.blankTile[moveAxis] - tile[moveAxis] > 0 ? 1 : -1;
+
+    // static refs needed through tile movement that will change during it
     const blankMoveVal = this.blankTile[moveAxis];
     const tileMoveVal = tile[moveAxis];
-    this.blankTile[moveAxis] = tile[moveAxis];
-    console.log(moveDistance);
 
-    this.tileList.forEach((tileMove, index) => {
-      if (tileMove[matchAxis] === tile[matchAxis] && tileMove.blank !== true) {
-        const moveCheck = tileMove[moveAxis] * moveDir;
-        if ( moveCheck >= tileMoveVal * moveDir && moveCheck <= blankMoveVal * moveDir) {
-          tileMove[moveAxis] += moveDir;
+    this.tileList.forEach((tileMove, index) => { // iterate tiles for movement updates
+      if (tileMove[matchAxis] === tile[matchAxis] && tileMove.blank !== true) { // tiles that match the move axis and are not the blank tile
+        // conditionals normalized by move direction
+        const moveCheck = tileMove[moveAxis] * moveDirection;
+        if ( moveCheck >= tileMoveVal * moveDirection && moveCheck <= blankMoveVal * moveDirection) {
+          tileMove[moveAxis] += moveDirection;
         }
       }
     });
 
-    console.log(moveAxis, moveDir, tile[moveAxis]);
-
+    // move blank to clicked position
+    this.blankTile[moveAxis] = tileMoveVal;
   }
 
   private generateTiles(): void {
