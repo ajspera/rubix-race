@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ColorPool, TileConfig } from '../agnostics/agnostics';
-import { clone } from 'lodash';
+import { find } from 'lodash';
+import { GameService } from 'src/game.service';
 
 @Component({
   selector: 'app-board',
@@ -9,33 +10,23 @@ import { clone } from 'lodash';
 })
 export class BoardComponent implements OnInit {
 
-  tileCols = 5;
-  tileRows = 5;
-  blankColor = 'transparent';
+  blankTile: TileConfig | undefined;
 
-  blankTile: null | TileConfig = null;
+  @Input() tileList: TileConfig[] = [];
+  @Input() tileRows = 0;
+  @Input() tileCols = 0;
 
-  availableColors = [
-    'red',
-    'green',
-    'blue',
-    'white',
-    'orange',
-    'yellow'
-  ];
-
-  tileList: TileConfig[] = [];
-
-  constructor() {
+  constructor(
+  ) {
 
   }
 
   ngOnInit(): void {
-    this.generateTiles();
+    this.blankTile = find(this.tileList, tile => tile.blank);
   }
 
   public handleTileClick(tile: TileConfig): void {
-    if (tile.blank === true) {
+    if (tile.blank === true || !this.blankTile) {
       return;
     }
     let moveAxis: 'col' | 'row';
@@ -70,35 +61,6 @@ export class BoardComponent implements OnInit {
 
     // move blank to clicked position
     this.blankTile[moveAxis] = tileMoveVal;
-  }
-
-  private generateTiles(): void {
-    const colorPool = new ColorPool(this.availableColors, (this.tileRows * this.tileCols) - 1);
-    this.tileList = [];
-    let rowI = 0;
-    while (rowI < this.tileCols) {
-      const newRow = [];
-      let colI = 0;
-      while (colI < this.tileRows) {
-        const newTile = {
-          row: rowI,
-          col: colI,
-          color: this.blankColor,
-          blank: true
-        };
-        const newColor = colorPool.pullColor();
-        if (newColor) {
-          newTile.blank = false;
-          newTile.color = newColor;
-        } else {
-          this.blankTile = newTile;
-        }
-        newRow.push(newTile);
-        this.tileList.push(newTile);
-        colI++;
-      }
-      rowI++;
-    }
   }
 
 }

@@ -1,1 +1,13 @@
-<app-board></app-board>
+<app-board
+  class="user-movable"
+  [tileList]="gameService.board"
+  [tileCols]="gameService.boardCols"
+  [tileRows]="gameService.boardRows"
+></app-board>
+
+<app-board
+  class="target"
+  [tileList]="gameService.target"
+  [tileCols]="gameService.targetCols"
+  [tileRows]="gameService.targetRows"
+></app-board>
