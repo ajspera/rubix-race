@@ -7,6 +7,7 @@
     [style.top]="(100 * tile.row / tileRows) + '%'"
     [style.left]="(100 * tile.col / tileCols) + '%'"
     [style.background]="tile.color"
+    [class.movable]="!tile.blank"
     (click)="handleTileClick(tile)"
   >
     row: {{ tile.row }}<br>

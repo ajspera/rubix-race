@@ -11,7 +11,7 @@ export class BoardComponent implements OnInit {
 
   tileCols = 5;
   tileRows = 5;
-  blankColor = 'grey';
+  blankColor = 'transparent';
 
   blankTile: null | TileConfig = null;
 
@@ -58,7 +58,7 @@ export class BoardComponent implements OnInit {
     const blankMoveVal = this.blankTile[moveAxis];
     const tileMoveVal = tile[moveAxis];
 
-    this.tileList.forEach((tileMove, index) => { // iterate tiles for movement updates
+    this.tileList.forEach( tileMove => { // iterate tiles for movement updates
       if (tileMove[matchAxis] === tile[matchAxis] && tileMove.blank !== true) { // tiles that match the move axis and are not the blank tile
         // conditionals normalized by move direction
         const moveCheck = tileMove[moveAxis] * moveDirection;
