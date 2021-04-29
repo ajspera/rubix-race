@@ -9,6 +9,8 @@ import { TileConfig } from './agnostics/agnostics';
 })
 export class GameComponent implements OnInit {
 
+  public won = false;
+
   constructor(
     public gameService: GameService,
   ) {

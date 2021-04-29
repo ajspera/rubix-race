@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ColorPool, TileConfig } from './game/agnostics/agnostics';
+import { find } from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,16 @@ export class GameService {
 
   public getBoard(): TileConfig[] {
     return this.board;
+  }
+
+  public checkWin(): boolean {
+    return this.target.every(tile => {
+      const compareTile = find(this.board, boardTile => {
+        return boardTile.row === tile.row + 1 && boardTile.col === tile.col + 1;
+      });
+      console.log(tile.color === compareTile?.color, tile, compareTile);
+      return tile.color === compareTile?.color;
+    });
   }
 
   private generateTarget(): TileConfig[] {

@@ -11,3 +11,5 @@
   [tileCols]="gameService.targetCols"
   [tileRows]="gameService.targetRows"
 ></app-board>
+
+<button (click)="won = gameService.checkWin()">{{ won ? 'you won' : 'check win' }}</button>
