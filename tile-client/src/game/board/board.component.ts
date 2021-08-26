@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ColorPool, TileConfig } from '../agnostics/agnostics';
+import { TileConfig } from '../agnostics/agnostics';
 import { find } from 'lodash';
-import { GameService } from 'src/game.service';
 
 @Component({
   selector: 'app-board',

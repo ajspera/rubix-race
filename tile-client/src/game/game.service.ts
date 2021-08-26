@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ColorPool, TileConfig } from './game/agnostics/agnostics';
+import { ColorPool, TileConfig } from './agnostics/agnostics';
 import { find } from 'lodash';
 
 @Injectable({

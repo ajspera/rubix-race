@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { GameService } from 'src/game.service';
-import { TileConfig } from './agnostics/agnostics';
+import { GameService } from './game.service';
+import { MultiplayerService } from './multiplayer/multiplayer.service';
 
 @Component({
   selector: 'app-game',
@@ -13,8 +13,10 @@ export class GameComponent implements OnInit {
 
   constructor(
     public gameService: GameService,
+    private multiplayerService: MultiplayerService,
   ) {
-
+    console.log( this.multiplayerService );
+    (window as any).mp = this.multiplayerService;
   }
 
   ngOnInit(): void {
