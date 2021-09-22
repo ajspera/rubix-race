@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ColorPool, TileConfig } from './agnostics/agnostics';
+import { BoardConfig, ColorPool, TileConfig } from './agnostics/agnostics';
 import { find } from 'lodash';
 
 @Injectable({
@@ -15,13 +15,24 @@ export class GameService {
     'orange',
     'yellow'
   ];
-
-  targetCols = 3;
-  targetRows = 3;
+  // boardConfig: BoardConfig = {
+  //   tileMatrix: [
+  //     [1, 1, 1, 1, 1, 1],
+  //     [2, 2, 2, 2, 2, 2],
+  //     [0, 0, 2, 2, 1, 0],
+  //     [0, 0, 2, 2, 1, 0],
+  //     [0, 0, 2, 2, 1, 0]
+  //   ]
+  // };
+  boardConfig: BoardConfig = {
+    tileMatrix: [
+      [2, 2, 0, 0],
+      [2, 2, 1, 0],
+      [2, 2, 1, 1],
+      [2, 2, 2, 2]
+    ]
+  };
   target: TileConfig[] = this.generateTarget();
-
-  boardCols = this.targetCols + 2;
-  boardRows = this.targetRows + 2;
   board: TileConfig[] = this.generateBoard();
 
   constructor() { }
@@ -36,8 +47,11 @@ export class GameService {
 
   public checkWin(): boolean {
     return this.target.every(tile => {
+      if(tile.blank) {
+        return true;
+      }
       const compareTile = find(this.board, boardTile => {
-        return boardTile.row === tile.row + 1 && boardTile.col === tile.col + 1;
+        return boardTile.row === tile.row && boardTile.col === tile.col;
       });
       console.log(tile.color === compareTile?.color, tile, compareTile);
       return tile.color === compareTile?.color;
@@ -45,38 +59,52 @@ export class GameService {
   }
 
   private generateTarget(): TileConfig[] {
-    return this.generateTiles(this.targetCols, this.targetRows, false);
+    return this.generateTiles(true);
   }
 
   private generateBoard(): TileConfig[] {
-    return this.generateTiles(this.boardCols, this.boardRows, true);
+    return this.generateTiles(false);
   }
 
-  private generateTiles(cols: number, rows: number, withBlank: boolean): TileConfig[] {
-    const colorPool = new ColorPool(this.availableColors, (rows * cols) - (withBlank ? 1 : 0));
-    const tileList = [];
-    let rowI = 0;
-    while (rowI < cols) {
+  private generateTiles(target: boolean): TileConfig[] {
+    let tileCount = 0;
+    this.boardConfig.tileMatrix.forEach(row => {
+      row.forEach(tile => {
+        if(tile === 2)
+          tileCount++;
+        if(tile === 1 && !target)
+          tileCount++;
+      })
+    })
+    if(!target)
+      tileCount--;
+    const colorPool = new ColorPool(this.availableColors, tileCount);
+    const tileList: TileConfig[] = [];
+    this.boardConfig.tileMatrix.forEach((row, rowI) => {
       const newRow = [];
-      let colI = 0;
-      while (colI < rows) {
+      row.forEach((tileType, colI) => {
         const newTile = {
           row: rowI,
           col: colI,
           color: 'transparent',
-          blank: true
+          empty: true,
+          blank: false
         };
-        const newColor = colorPool.pullColor();
-        if (newColor) {
-          newTile.blank = false;
-          newTile.color = newColor;
+        if(tileType === 0 || (tileType === 1 && target)) {
+          newTile.blank = true;
+          newTile.empty = false;
+          newTile.color = '#000'
+        } else if(tileType === 1 || tileType === 2) {
+          const newColor = colorPool.pullColor();
+          if (newColor) {
+            newTile.empty = false;
+            newTile.color = newColor;
+          }
         }
         newRow.push(newTile);
         tileList.push(newTile);
-        colI++;
-      }
-      rowI++;
-    }
+      });
+    });
     return tileList;
   }
 

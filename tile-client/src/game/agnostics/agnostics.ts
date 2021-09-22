@@ -29,5 +29,17 @@ export interface TileConfig {
   row: number;
   col: number;
   color: string;
+  empty: boolean;
   blank: boolean;
+}
+
+export interface BoardConfig {
+  /**
+   * tileMatrix - sets the playable board area and what tiles will make up the target
+   * description:
+   * 0 - not part of board
+   * 1 - part of movable tile board
+   * 2 - part of target evaluation area
+   */
+  tileMatrix: (0 | 1 | 2)[][];
 }
