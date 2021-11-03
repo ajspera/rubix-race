@@ -24,9 +24,9 @@ export class BoardComponent implements OnChanges {
     this.tileRows = 0;
     this.tileCols = 0;
     this.tileList.forEach(tile => {
-      this.tileRows = tile.row > this.tileRows ? tile.row : this.tileRows;      
-      this.tileCols = tile.col > this.tileCols ? tile.col : this.tileCols;      
-    })
+      this.tileRows = tile.row > this.tileRows ? tile.row : this.tileRows;
+      this.tileCols = tile.col > this.tileCols ? tile.col : this.tileCols;
+    });
     this.tileRows++;
     this.tileCols++;
     this.emptyTile = find(this.tileList, tile => tile.empty);

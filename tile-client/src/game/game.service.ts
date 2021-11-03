@@ -26,12 +26,20 @@ export class GameService {
   // };
   boardConfig: BoardConfig = {
     tileMatrix: [
-      [2, 2, 0, 0],
-      [2, 2, 1, 0],
-      [2, 2, 1, 1],
-      [2, 2, 2, 2]
+      [2, 2, 2, 2, 2, 2],
+      [2, 1, 1, 1, 1, 2],
+      [2, 1, 0, 0, 1, 2],
+      [2, 1, 1, 1, 1, 2],
+      [2, 2, 2, 2, 2, 2]
     ]
-  };
+  };  // boardConfig: BoardConfig = {
+  //   tileMatrix: [
+  //     [2, 2, 0, 0],
+  //     [2, 2, 1, 0],
+  //     [2, 2, 1, 1],
+  //     [2, 2, 2, 2]
+  //   ]
+  // };
   target: TileConfig[] = this.generateTarget();
   board: TileConfig[] = this.generateBoard();
 
@@ -93,7 +101,7 @@ export class GameService {
         if(tileType === 0 || (tileType === 1 && target)) {
           newTile.blank = true;
           newTile.empty = false;
-          newTile.color = '#000'
+          newTile.color = '#000';
         } else if(tileType === 1 || tileType === 2) {
           const newColor = colorPool.pullColor();
           if (newColor) {
