@@ -1,0 +1,29 @@
+<button type="button" (click)="saveBoard()">Save</button>
+<div class="size-config">
+  <label for="rows">Rows</label>
+  <input [(ngModel)]="tileRows" type="number" name="rows" (ngModelChange)="updateSize()">
+  <label for="cols">Cols</label>
+  <input [(ngModel)]="tileCols" type="number" name="cols" (ngModelChange)="updateSize()" >
+</div>
+<div class="edit-types">
+  <button type="button" class="inactive" [class.active]="editType === 0" (click)="editType = 0">Inactive</button>
+  <button type="button" class="movable" [class.active]="editType === 1" (click)="editType = 1">Movable</button>
+  <button type="button" class="target" [class.active]="editType === 2" (click)="editType = 2">Target</button>
+</div>
+<div class="board-configurator">
+  <div *ngFor="let row of editMatrix; let rowI = index">
+    <div
+      *ngFor="let tile of row; let colI = index"
+      class="tile"
+      [style.width]="(100 / tileCols) + '%'"
+      [style.height]="(100 / tileRows) + '%'"
+      [style.top]="(100 * rowI / tileRows) + '%'"
+      [style.left]="(100 * colI / tileCols) + '%'"
+      [class.inactive]="tile === 0"
+      [class.movable]="tile === 1"
+      [class.target]="tile === 2"
+      (click)="handleTileClick(rowI, colI)"
+    >
+    </div>
+  </div>
+</div>

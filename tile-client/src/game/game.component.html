@@ -1,11 +1,24 @@
-<app-board
-  class="user-movable"
-  [tileList]="gameService.board"
-></app-board>
+<div class="nav">
+  <button (click)="mode = 'play'" [class.active]="mode == 'play'">Play</button>
+  <button (click)="mode = 'config'" [class.active]="mode == 'config'">Edit Board</button>
+</div>
+<div *ngIf="mode == 'play'">
+  <app-board
+    class="user-movable"
+    [tileList]="gameService.board"
+  ></app-board>
 
-<app-board
-  class="target"
-  [tileList]="gameService.target"
-></app-board>
+  <app-board
+    class="target"
+    [tileList]="gameService.target"
+  ></app-board>
 
-<button (click)="won = gameService.checkWin()">{{ won ? 'you won' : 'check win' }}</button>
+  <button (click)="won = gameService.checkWin()">{{ won ? 'you won' : 'check win' }}</button>
+</div>
+<div *ngIf="mode == 'config'">
+  <app-board-configurator
+    class="config"
+    [boardConfig]="gameService.boardConfig"
+    (boardSave)="updateBoardConfig($event)"
+></app-board-configurator>
+</div>

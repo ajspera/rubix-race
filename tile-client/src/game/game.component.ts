@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BoardConfig } from './agnostics/agnostics';
 import { GameService } from './game.service';
 import { MultiplayerService } from './multiplayer/multiplayer.service';
 
@@ -10,6 +11,7 @@ import { MultiplayerService } from './multiplayer/multiplayer.service';
 export class GameComponent implements OnInit {
 
   public won = false;
+  public mode: 'play' | 'config' = 'config';
 
   constructor(
     public gameService: GameService,
@@ -20,6 +22,10 @@ export class GameComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  updateBoardConfig(boardConfig: BoardConfig): void {
+    this.gameService.changeBoardConfig(boardConfig);
   }
 
 }

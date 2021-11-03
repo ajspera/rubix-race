@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { GameComponent } from './game.component';
 import { BoardModule } from './board/board.module';
 import { TargetComponent } from './target/target.component';
+import { BoardConfiguratorModule } from './board-configurator/board-configurator.module';
 
 
 
@@ -13,7 +14,8 @@ import { TargetComponent } from './target/target.component';
   ],
   imports: [
     CommonModule,
-    BoardModule
+    BoardModule,
+    BoardConfiguratorModule
   ],
   exports: [
     GameComponent
