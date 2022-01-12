@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { TileConfig } from '../agnostics/agnostics';
-import { find } from 'lodash';
+import { find, orderBy, sortBy } from 'lodash';
 
 @Component({
   selector: 'app-board',
@@ -50,21 +50,37 @@ export class BoardComponent implements OnChanges {
       return; // bail if selected tile can't move on empty tile's axis
     }
 
-    const moveDirection: -1 | 1 = this.emptyTile[moveAxis] - tile[moveAxis] > 0 ? 1 : -1;
+    const moveDistance = this.emptyTile[moveAxis] - tile[moveAxis];
+
+    const moveDirection: -1 | 1 = moveDistance > 0 ? 1 : -1;
+
+    let checkI = moveDistance;
+    while(checkI !== 0) {
+      const checkTile = 
+      checkI -= moveDirection;
+    }
 
     // static refs needed through tile movement that will change during it
     const emptyMoveVal = this.emptyTile[moveAxis];
     const tileMoveVal = tile[moveAxis];
+
+    let tilesToMove: TileConfig[] = [];
 
     this.tileList.forEach( tileMove => { // iterate tiles for movement updates
       if (tileMove[matchAxis] === tile[matchAxis] && tileMove.empty !== true) { // tiles that match the move axis and are not the empty tile
         // conditionals normalized by move direction
         const moveCheck = tileMove[moveAxis] * moveDirection;
         if ( moveCheck >= tileMoveVal * moveDirection && moveCheck <= emptyMoveVal * moveDirection) {
-          tileMove[moveAxis] += moveDirection;
+          tilesToMove.push(tileMove)
         }
       }
     });
+
+    tilesToMove = orderBy(tilesToMove, [moveAxis], [moveDirection === 1 ? 'asc' : 'desc'])
+
+    tilesToMove.forEach( tileMove => {
+      tileMove[moveAxis] += moveDirection;
+    } )
 
     // move empty to clicked position
     this.emptyTile[moveAxis] = tileMoveVal;
