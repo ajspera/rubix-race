@@ -1,0 +1,33 @@
+{
+  "name": "rubix-race",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "classnames": "^2.5.1",
+    "lodash": "^4.17.21",
+    "next": "15.1.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@stylistic/eslint-plugin-ts": "^2.13.0",
+    "@types/lodash": "^4.17.14",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.1.4",
+    "sass": "^1.83.1",
+    "sass-embedded": "^1.83.1",
+    "typescript": "^5",
+    "typescript-eslint": "^8.20.0",
+    "typescript-plugin-css-modules": "^5.1.0"
+  }
+}
