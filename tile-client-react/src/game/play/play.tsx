@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useLayoutEffect, useState } from 'react';
 import styles from './play.module.scss';
 import BoardComponent from '../board/board';
 import { checkWin, setupGame, Tile } from '../helpers';
@@ -18,15 +18,21 @@ export default function Play({ boardConfig }: Props) {
 
   const handleTileClick = (tile: Tile) => {
     setPlayBoard({ ...moveTile(playBoard, tile) });
-    setWon(checkWin(targetBoard, playBoard));
   };
 
-  const handleReset = () => {
+  const handleReset = useCallback(() => {
     const boards = setupGame(boardConfig);
     setPlayBoard(boards.playBoard);
     setTargetBoard(boards.targetBoard);
-    setWon(checkWin(targetBoard, playBoard));
-  };
+  }, [boardConfig]);
+
+  useLayoutEffect(() => {
+    setWon(() => checkWin(targetBoard, playBoard));
+  }, [playBoard, targetBoard]);
+
+  useLayoutEffect(() => {
+    handleReset();
+  }, [boardConfig, handleReset]);
 
   return (
     <div className={styles.play}>
