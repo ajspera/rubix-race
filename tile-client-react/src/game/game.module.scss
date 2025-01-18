@@ -1,0 +1,23 @@
+.game {
+  // height: 100%;
+}
+.config {
+  height: 600px;
+  width: 1100px;
+  float: left;
+}
+.nav {
+  padding: 0 0 10px;
+  button {
+    width: 50%;
+    background: #ddd;
+    border: none;
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    &.active {
+      background: #ccc;
+    }
+  }
+}
