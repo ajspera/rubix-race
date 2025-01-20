@@ -12,12 +12,13 @@ type PageMode = 'play' | 'config'
 
 export default function Game() {
   const [mode, setMode] = useState<PageMode>('play');
+  const [boardConfig, setBoardConfig] = useState(defaultBoardConfig);
 
   const getPage = (mode: PageMode) => {
     if(mode === 'config')
-      return <BoardConfigurator />;
+      return <BoardConfigurator boardConfig={boardConfig} onBoardSave={e => setBoardConfig(e)} />;
     else
-      return <Play boardConfig={defaultBoardConfig} />;
+      return <Play boardConfig={boardConfig} />;
   };
   return (
     <NoSsr>
@@ -27,26 +28,5 @@ export default function Game() {
       </div>
       {getPage(mode)}
     </NoSsr>
-    // <div *ngIf="mode == 'play'">
-    //   <app-board
-    //     class="user-movable"
-    //     [tileList]="gameService.board"
-    //   ></app-board>
-
-  // <app-board
-  //   class="target"
-  //   [tileList]="gameService.target"
-  // ></app-board>
-
-  // <button onclick="won = gameService.checkWin()">{{ won ? 'you won' : 'check win' }}</button>
-  // </div>
-  // <div *ngIf="mode == 'config'">
-  //   <app-board-configurator
-  //     class="config"
-  //     [boardConfig]="gameService.boardConfig"
-  //     (boardSave)="updateBoardConfig($event)"
-  // >
-  //   </app-board-configurator>
-  // </div>
   );
 }
