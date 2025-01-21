@@ -31,7 +31,7 @@ export default function BoardConfigurator({ boardConfig, onBoardSave }: Props) {
         let colI = 0;
         const newCol: BoardConfig['tileMatrix'][0] = [];
         while (colI < tileCols ) {
-          newCol.push(oldMatrix[rowI][colI] || 0);
+          newCol.push(oldMatrix[rowI]?.[colI] || 0);
           colI++;
         }
         newMatrix.push(newCol);
