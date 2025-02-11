@@ -1,5 +1,3 @@
-'use client';
-
 import { useCallback, useLayoutEffect, useState } from 'react';
 import styles from './play.module.scss';
 import BoardComponent from '../board/board';

@@ -78,22 +78,22 @@ const availableColors = [
 //     [2, 2, 2, 2, 2, 2]
 //   ]
 // };
-// export const defaultBoardConfig: BoardConfig = {
-//   tileMatrix: [
-//     [2, 2, 0, 0],
-//     [2, 2, 1, 0],
-//     [2, 2, 1, 1],
-//     [2, 2, 2, 2]
-//   ]
-// };
 export const defaultBoardConfig: BoardConfig = {
   tileMatrix: [
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 2, 1],
+    [1, 1, 1, 0],
+    [1, 2, 1, 0],
+    [1, 2, 1, 1],
     [1, 1, 1, 1]
   ]
 };
+// export const defaultBoardConfig: BoardConfig = {
+//   tileMatrix: [
+//     [1, 1, 1, 1],
+//     [1, 1, 1, 1],
+//     [1, 1, 2, 1],
+//     [1, 1, 1, 1]
+//   ]
+// };
 
 export const checkWin = (targetBoard: TargetBoard, playBoard: PlayBoard): boolean => {
   return targetBoard.tiles.every(tile => {
@@ -222,4 +222,3 @@ const generateBoard = (boardConfig: BoardConfig, type: Board['type']): Board => 
     type: type
   };
 };
-

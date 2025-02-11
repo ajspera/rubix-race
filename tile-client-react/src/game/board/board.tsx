@@ -1,5 +1,3 @@
-'use client';
-
 import { round } from 'lodash';
 import { Board, Tile } from '../helpers';
 import styles from './board.module.scss';
